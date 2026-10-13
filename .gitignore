@@ -10,6 +10,7 @@ promo/deliverables/*.wav
 promo/capture/raw/
 promo/studio/build/
 promo/studio/build-v2/
+promo/studio/build-v3/
 *.keystore
 *.jks
 *.p12

@@ -33,7 +33,7 @@ function DesktopShot({part,frame}){
   <div style={{position:'absolute',left:24,bottom:16,color:night,background:'#F2F1E9F2',padding:'9px 16px',borderRadius:8,fontSize:18,fontWeight:500}}>示例操作截图 · 重新编排节奏</div>
  </div>;
 }
-function LaunchScene({part,index}){
+function LaunchScene({part,index,musicCredits}){
  const frame=useCurrentFrame(),{fps}=useVideoConfig(),p=frame/part.frames;
  const dark=['hook','reveal','license','community'].includes(part.kind),background=dark?night:C.cream;
  const enter=spring({frame:frame-3,fps,config:{damping:24,stiffness:160,mass:.8}});
@@ -62,6 +62,7 @@ function LaunchScene({part,index}){
    <div style={{position:'absolute',right:145,top:315,fontSize:33,lineHeight:2.3,color:C.mint}}>{['报告遇到的问题','补充可靠的资料','提交一个小改进'].map((t,i)=><div key={t} style={{opacity:interpolate(frame,[15+i*12,26+i*12],[0,1],clamp)}}><span style={{color:accent}}>0{i+1}</span>　{t}</div>)}</div>
    <div style={{position:'absolute',left:142,top:700,fontSize:35,color:C.white,borderBottom:`2px solid ${accent}`,paddingBottom:18}}>github.com/zhouzi4449/day-companion</div>
    <div style={{position:'absolute',left:143,top:825,fontSize:19,color:C.mint}}>一般成长支持，不提供诊断。当前版本仍需共同完善。</div>
+   {musicCredits?<div style={{position:'absolute',left:143,top:887,fontSize:17,lineHeight:1.65,color:C.mint}}>Music: “Chill Wave” — Kevin MacLeod (incompetech.com) · CC BY 4.0<br/>creativecommons.org/licenses/by/4.0/ · Excerpt, EQ, fades &amp; ducking</div>:null}
   </>:<>
    <div style={{position:'absolute',left:122,top:125,fontSize:20,color:C.muted}}>0{index} / {notes[part.id]}</div>
    <h1 style={{position:'absolute',left:120,top:160,fontSize:57,lineHeight:1.1,fontWeight:700,margin:0,opacity:enter,transform:`translateY(${(1-enter)*18}px)`}}>{part.title}</h1>
@@ -70,13 +71,14 @@ function LaunchScene({part,index}){
   </>}
  </AbsoluteFill>;
 }
-export function LaunchVideo(){
- const frame=useCurrentFrame(),part=timeline.find(p=>frame>=p.startFrame&&frame<p.startFrame+p.frames)??timeline.at(-1),relative=frame-part.startFrame;
+export function LaunchVideo({parts=timeline,audioMix=null,musicCredits=false}){
+ const totalFrames=parts.reduce((n,p)=>n+p.frames,0);
+ const frame=useCurrentFrame(),part=parts.find(p=>frame>=p.startFrame&&frame<p.startFrame+p.frames)??parts.at(-1),relative=frame-part.startFrame;
  const caption=(part.cues.find(c=>relative>=c.from&&relative<c.to)??part.cues.filter(c=>c.from<=relative).at(-1))?.text??'';
  return <AbsoluteFill>
-  {timeline.map((p,i)=><Sequence key={p.id} from={p.startFrame} durationInFrames={p.frames}><LaunchScene part={p} index={i}/>{p.audio?<Audio src={staticFile(p.audio)}/>:null}</Sequence>)}
-  <Audio src={staticFile('gentle-score.wav')} loop volume={f=>interpolate(f,[0,25,LAUNCH_FRAMES-45,LAUNCH_FRAMES],[0,.065,.065,0],clamp)}/>
+  {parts.map((p,i)=><Sequence key={p.id} from={p.startFrame} durationInFrames={p.frames}><LaunchScene part={p} index={i} musicCredits={musicCredits}/>{p.audio&&!audioMix?<Audio src={staticFile(p.audio)}/>:null}</Sequence>)}
+  {audioMix?<Audio src={staticFile(audioMix)}/>:<Audio src={staticFile('gentle-score.wav')} loop volume={f=>interpolate(f,[0,25,totalFrames-45,totalFrames],[0,.065,.065,0],clamp)}/>}
   {caption?<div style={{position:'absolute',bottom:32,left:220,right:220,display:'flex',justifyContent:'center'}}><div style={{fontFamily:FONT.body,fontSize:30,fontWeight:500,lineHeight:1.45,background:'#102B24F2',color:C.white,padding:'12px 26px',borderRadius:10,textAlign:'center',maxWidth:1480}}>{caption}</div></div>:null}
-  <div style={{position:'absolute',bottom:0,left:0,height:4,background:accent,width:frame/LAUNCH_FRAMES*1920}}/>
+  <div style={{position:'absolute',bottom:0,left:0,height:4,background:accent,width:frame/totalFrames*1920}}/>
  </AbsoluteFill>;
 }

@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "date": "2026-10-13",
+  "duration": 70.485,
+  "frames": 2114,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": "30/1",
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCues": 16,
+  "fullVideoAndVoiceDecode": "passed",
+  "voicePeak": 0.787506103515625,
+  "voiceRms": 0.08619876846706162,
+  "syntheticVoice": true,
+  "speaker": "Serena",
+  "voiceCloning": false,
+  "syntheticDataOnly": true,
+  "actualOperationScreenshots": 28,
+  "fileBytes": 16132810,
+  "sha256": "7901555ad166da2fd683ee8f9003cd163755d0aad17733f48b1b84989c8141c7",
+  "visualReview": "v3-scene-review.md",
+  "voiceNaturalness": "Subjective; automatic format/volume checks do not establish human recording or naturalness",
+  "profile": "mature-magnetic",
+  "mixedAudioDecode": "passed",
+  "music": {
+    "title": "Chill Wave",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600048",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "changes": "excerpt, EQ, fades and speech-driven ducking; original melody and tempo preserved",
+    "originalMp3Sha256": "7f07fbf89860959ff527f7b74606146dd0b0de263739989a70ce712c7c361614"
+  },
+  "speechMarginP10Db": 17.324924847664207,
+  "speechMarginMedianDb": 23.661254676570135,
+  "mixedPeak": 0.7895809713475251
+}

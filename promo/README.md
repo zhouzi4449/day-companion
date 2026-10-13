@@ -60,3 +60,19 @@ node promo/verify-v2.mjs
 音色更换时同时设置 `NARRATION_SPEAKER`，使metadata与实际音色一致；重新配音前把旧的 `promo/capture/raw/qwen-clauses` 改名保留，因为脚本会保留已有分句。24kHz单声道PCM16按句实测时长编排，没有通过加速/变调把系统语音伪装成真人。ASR反向转写仅辅助检查漏读与重复，不能证明真人感；实际核验见 `deliverables/v2-verification.json` 和 `v2-scene-review.md`。
 
 本机ASR核对用 `openai-whisper==20250625` 的多语言base模型，独立工具环境安装后运行 `python promo/transcribe-v2.py`；没有调用收费转写API。原始转写保留同音字识别错误，字幕使用原稿与实测音频时间表，不直接拿ASR结果发布。
+
+## 成熟磁性声音与音乐版（v3）
+
+用户选定第二种 `mature-magnetic` Serena风格。成片 `deliverables/日有回声-音乐成熟声版.mp4`，纯旁白 `日有回声-成熟旁白.wav/txt`，完整声音 `日有回声-成熟声音乐混音.wav`，字幕 `日有回声-音乐成熟声版.srt`。旁白仍为合成语音。音乐采用Kevin MacLeod的Chill Wave，CC BY4.0，署名和独立许可详见 [references-v3.md](references-v3.md)；不能将其改为项目非商业条款。
+
+工程已含混音与时间表，重渲染不需要语音模型：
+
+```powershell
+cd promo/studio
+node render-v2.mjs --v3 --stills
+node render-v2.mjs --v3
+```
+
+重新配音时使用独立工具环境和固定模型；`python promo/synthesize-qwen.py --model <本机模型目录> --profile mature-magnetic`，再运行 `node promo/assemble-v2.mjs --v3`。更换风格前保留并改名旧的raw/qwen-clauses-v3，脚本会拒绝混用不同指令。`mix-v3.py`从 `capture/raw/chill-wave.wav` 混音；需要重混时将公开工程内原MP3用FFmpeg转成24kHz双声道PCM16该文件，再运行脚本。编排、配乐与字幕随实际新声音时长同步生成；未用音高或语速变换。
+
+`node promo/verify-v2.mjs --v3`核验成片；`python promo/transcribe-v2.py --v3`和`--mixed`辅助检查漏句。音量检查是电平证据，不是所有设备听感或真人录音认证。

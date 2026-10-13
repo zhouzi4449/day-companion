@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "date": "2026-10-13",
+  "actualEncodedMixAlignmentSamples": 0,
+  "actualEncodedMixCorrelation": 0.9997729303307153,
+  "actualEncodedAudioPeak": 0.791961669921875,
+  "actualEncodedAudioRms": 0.08625175680228002,
+  "comparedSeconds": 70.46666666666667,
+  "voiceVsMixAsrSimilarity": 0.9917355371900827,
+  "asrDifferences": [
+    {
+      "operation": "replace",
+      "pureVoice": "学科",
+      "mixed": "序可"
+    }
+  ],
+  "limits": "Whisper base gives homophone and simplified/traditional errors in both tracks. Similarity checks additional music interference, not correctness of every phoneme or subjective naturalness; no full human listening certification."
+}

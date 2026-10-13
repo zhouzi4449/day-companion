@@ -1,0 +1,26 @@
+{
+  "seconds": 70.46666666666667,
+  "sampleRate": 24000,
+  "voiceRms": 0.08619876846706162,
+  "musicRms": 0.00646151371745246,
+  "combinedPeak": 0.7895809713475251,
+  "linearGain": 1,
+  "duckAttackMs": 10,
+  "duckLookaheadMs": 80,
+  "duckReleaseMs": 550,
+  "musicMidrangeDipDb": -4,
+  "speechMarginP10Db": 17.324924847664207,
+  "speechMarginMedianDb": 23.661254676570135,
+  "minimumSpeechMarginDb": 14.467486818060458,
+  "measurement": "200ms windows with voice RMS above .02; a level check, not a listening test",
+  "music": {
+    "title": "Chill Wave",
+    "artist": "Kevin MacLeod",
+    "license": "CC BY 4.0",
+    "source": "https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1600048",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "changes": "excerpt, EQ, fades and speech-driven ducking; original melody and tempo preserved",
+    "originalMp3Sha256": "7f07fbf89860959ff527f7b74606146dd0b0de263739989a70ce712c7c361614"
+  },
+  "mixedWavSha256": "2fc1637a479a86c3e782caa67da82faa239a54c2372180b9ab2f65d500aca608"
+}

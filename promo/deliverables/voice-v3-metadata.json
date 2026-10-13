@@ -1,0 +1,19 @@
+{
+  "provider": "Qwen3-TTS local CUDA synthesis",
+  "model": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+  "revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
+  "speaker": "Serena",
+  "profile": "mature-magnetic",
+  "instruct": "用成熟成年女性的中低音域说话，声音温柔、磁性、轻微沙哑，带一点自然的呼吸感和含蓄的魅惑感。像坐在身旁低声分享自己做的项目，松弛、从容、自信。普通话清晰，连贯自然，语速适中，词语重音柔和，句尾自然收束。",
+  "license": "Apache-2.0",
+  "synthetic": true,
+  "voiceCloning": false,
+  "referenceAudioUsed": false,
+  "sampleRate": 24000,
+  "fps": 30,
+  "frames": 2114,
+  "seconds": 70.46666666666667,
+  "parts": 11,
+  "subtitleCues": 16,
+  "timing": "Measured per-sentence PCM duration, silence edges trimmed; no pitch/speed change; subtitles and edits use the same 30fps timeline"
+}

@@ -1,0 +1,211 @@
+[
+  {
+    "id": "Hook",
+    "title": "忙了一天，\n还是觉得没进步？",
+    "text": "忙了一天，晚上却觉得自己什么也没做？",
+    "kind": "hook",
+    "audio": "narration-v3/Hook.wav",
+    "startFrame": 0,
+    "frames": 142,
+    "cues": [
+      {
+        "text": "忙了一天，晚上却觉得自己什么也没做？",
+        "from": 0,
+        "to": 132
+      }
+    ]
+  },
+  {
+    "id": "Reveal",
+    "title": "我做了一个\n桌面成长陪伴应用",
+    "text": "我做了一个桌面应用，叫日有回声。",
+    "kind": "reveal",
+    "screen": "today",
+    "audio": "narration-v3/Reveal.wav",
+    "startFrame": 142,
+    "frames": 116,
+    "cues": [
+      {
+        "text": "我做了一个桌面应用，叫日有回声。",
+        "from": 0,
+        "to": 106
+      }
+    ]
+  },
+  {
+    "id": "Daily",
+    "title": "先说说，今天发生了什么",
+    "text": "打开它，聊聊今天做了什么，卡在了哪里。",
+    "kind": "daily",
+    "screen": "writing",
+    "audio": "narration-v3/Daily.wav",
+    "startFrame": 258,
+    "frames": 142,
+    "cues": [
+      {
+        "text": "打开它，聊聊今天做了什么，卡在了哪里。",
+        "from": 0,
+        "to": 132
+      }
+    ]
+  },
+  {
+    "id": "Talk",
+    "title": "回应之后，还能接着聊",
+    "text": "收到回复后，可以接着聊。觉得它理解偏了，直接纠正。",
+    "kind": "talk",
+    "screen": "conversation",
+    "audio": "narration-v3/Talk.wav",
+    "startFrame": 400,
+    "frames": 209,
+    "cues": [
+      {
+        "text": "收到回复后，可以接着聊。",
+        "from": 0,
+        "to": 65
+      },
+      {
+        "text": "觉得它理解偏了，直接纠正。",
+        "from": 69,
+        "to": 199
+      }
+    ]
+  },
+  {
+    "id": "Step",
+    "title": "把困扰，拆成能试的一步",
+    "text": "想找办法，就从一个能试的小步骤开始。只想倾诉，也可以告诉它。",
+    "kind": "step",
+    "screen": "next-step",
+    "audio": "narration-v3/Step.wav",
+    "startFrame": 609,
+    "frames": 200,
+    "cues": [
+      {
+        "text": "想找办法，就从一个能试的小步骤开始。",
+        "from": 0,
+        "to": 104
+      },
+      {
+        "text": "只想倾诉，也可以告诉它。",
+        "from": 108,
+        "to": 190
+      }
+    ]
+  },
+  {
+    "id": "Goals",
+    "title": "下一步，由你决定",
+    "text": "把在意的事定成目标：下一步做什么，什么时候开始。",
+    "kind": "goals",
+    "screen": "goals",
+    "audio": "narration-v3/Goals.wav",
+    "startFrame": 809,
+    "frames": 169,
+    "cues": [
+      {
+        "text": "把在意的事定成目标：下一步做什么，什么时候开始。",
+        "from": 0,
+        "to": 159
+      }
+    ]
+  },
+  {
+    "id": "Roles",
+    "title": "选择舒服的陪伴方式",
+    "text": "长者、姐姐、成年妹妹，选你舒服的陪伴方式。",
+    "kind": "roles",
+    "screen": "personas",
+    "audio": "narration-v3/Roles.wav",
+    "startFrame": 978,
+    "frames": 190,
+    "cues": [
+      {
+        "text": "长者、姐姐、成年妹妹，选你舒服的陪伴方式。",
+        "from": 0,
+        "to": 180
+      }
+    ]
+  },
+  {
+    "id": "Knowledge",
+    "title": "方法有步骤，也有出处",
+    "text": "五十二张知识卡，涵盖学习、拖延、沟通和休息。方法的步骤和出处，都能查看。",
+    "kind": "knowledge",
+    "screen": "growth-method",
+    "audio": "narration-v3/Knowledge.wav",
+    "startFrame": 1168,
+    "frames": 278,
+    "cues": [
+      {
+        "text": "五十二张知识卡，涵盖学习、拖延、沟通和休息。",
+        "from": 0,
+        "to": 156
+      },
+      {
+        "text": "方法的步骤和出处，都能查看。",
+        "from": 160,
+        "to": 268
+      }
+    ]
+  },
+  {
+    "id": "Records",
+    "title": "走过的日子，按天收好",
+    "text": "记录按天收好，标题可以让AI总结，也能自己改。备份支持导出和恢复。",
+    "kind": "records",
+    "screen": "days-renamed",
+    "audio": "narration-v3/Records.wav",
+    "startFrame": 1446,
+    "frames": 193,
+    "cues": [
+      {
+        "text": "记录按天收好，标题可以让AI总结，也能自己改。",
+        "from": 0,
+        "to": 128
+      },
+      {
+        "text": "备份支持导出和恢复。",
+        "from": 132,
+        "to": 183
+      }
+    ]
+  },
+  {
+    "id": "License",
+    "title": "源码公开 · 商业使用需授权",
+    "text": "源码已经公开。非商业使用遵循许可，商业化请先联系我授权。",
+    "kind": "license",
+    "audio": "narration-v3/License.wav",
+    "startFrame": 1639,
+    "frames": 214,
+    "cues": [
+      {
+        "text": "源码已经公开。",
+        "from": 0,
+        "to": 39
+      },
+      {
+        "text": "非商业使用遵循许可，商业化请先联系我授权。",
+        "from": 43,
+        "to": 204
+      }
+    ]
+  },
+  {
+    "id": "Community",
+    "title": "一起升级，日有回声",
+    "text": "它还是体验版，欢迎报告问题、补充资料，和我一起，把这个项目做得更好。",
+    "kind": "community",
+    "audio": "narration-v3/Community.wav",
+    "startFrame": 1853,
+    "frames": 261,
+    "cues": [
+      {
+        "text": "它还是体验版，欢迎报告问题、补充资料，和我一起，把这个项目做得更好。",
+        "from": 0,
+        "to": 212
+      }
+    ]
+  }
+]

@@ -64,4 +64,6 @@ node render-v2.mjs
 
 ## 非商业许可
 
+最新分享片v3使用用户选择的成熟磁性合成女声，加入Chill Wave器乐配乐，按旁白自动压低音量；影片、声音和同步字幕见[Releases](https://github.com/zhouzi4449/day-companion/releases/tag/v0.8.0)。[v3来源与混音说明](promo/references-v3.md)。音乐署名：“Chill Wave” — Kevin MacLeod (incompetech.com)，[CC BY4.0](https://creativecommons.org/licenses/by/4.0/)，截取、均衡、淡入淡出与旁白驱动压低；音乐本身保留该许可，不受项目非商业条款额外限制。旧片仍可下载。
+
 非商业使用、修改和分发须遵循[LICENSE](LICENSE)并保留[NOTICE](NOTICE)。未获原许可允许的商业使用，需先联系作者取得相应权利人的**书面许可**，见[COMMERCIAL.md](COMMERCIAL.md)。提交申请不等于获准，标注来源也不替代授权。第三方组件与外部贡献保留自己的权利，详见[第三方说明](THIRD_PARTY_NOTICES.md)。
