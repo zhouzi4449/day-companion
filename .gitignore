@@ -6,6 +6,8 @@ build/
 !.env.example
 *.log
 promo/deliverables/*.mp4
+promo/deliverables/*.wav
+promo/capture/raw/
 promo/studio/build/
 *.keystore
 *.jks

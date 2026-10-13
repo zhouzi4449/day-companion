@@ -1,6 +1,8 @@
 import { methodSources, methods } from './methods.mjs';
+import {growthSources,growthCards} from './growth.mjs';
 export const sources = {
   ...methodSources,
+  ...growthSources,
   care: { name: 'NIMH：照顾心理健康', url: 'https://www.nimh.nih.gov/health/topics/caring-for-your-mental-health', evidence: '官方健康教育' },
   sdt: { name: '自我决定理论：理论概述', url: 'https://selfdeterminationtheory.org/theory/', evidence: '理论与研究概述' },
   cbt: { name: 'NHS：重新看待无益想法', url: 'https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/self-help-cbt-techniques/reframing-unhelpful-thoughts/', evidence: '官方自助教育' },
@@ -37,4 +39,4 @@ export const knowledge = [
   { id: 'K-022', source: 'problem', title: '先照顾你在意的领域', tags: ['选择','优先','学习','工作','关系'], body: '问题很多时，可以先明确近期重视的领域，再选择一个可处理的问题。', practice: '从学习、关系或生活中挑一件目前最值得投入的事。', limit: '紧急后果需要优先处理，不能仅按喜好排序。' },
   { id: 'K-023', source: 'sdt', title: '别人的期待，也能商量', tags: ['被迫','父母','考试','期待','自主'], body: '外部要求和自己的理由可能同时存在。可以辨认愿意承担的部分与想协商的部分。', practice: '分别写下：这是对方的期待，这是我自己的理由。', limit: '自主选择不等于摆脱现实约束，也不要求立即放弃目标。' },
   { id: 'K-024', source: 'sdt', title: '支持不需要交换承诺', tags: ['陪伴','压力','讨好','妹妹','关系'], body: '关心与自主可以同时存在。获得支持，不需要先承诺永远进步或取悦陪伴者。', practice: '练习说：我需要支持，但今天不想做决定。', limit: '虚构AI角色不能替代现实关系，也不应要求排他依赖。' }
-].concat(methods).map((card,index) => ({ ...card, reviewedAt: index < 12 ? '2026-10-11' : '2026-10-12', version: 1, sourceInfo: sources[card.source], authorship: card.kind==='method'?'本项目原创方法卡':'本项目原创概念卡' }));
+].concat(methods,growthCards).map((card,index) => ({ ...card, reviewedAt: card.reviewedAt??(index < 12 ? '2026-10-11' : '2026-10-12'), version: 1, sourceInfo: sources[card.source], authorship: card.kind==='method'?'本项目原创方法卡':'本项目原创概念卡' }));

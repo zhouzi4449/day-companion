@@ -28,3 +28,8 @@ npm run render
 Studio默认本机3333端口。可用`REMOTION_BROWSER_EXECUTABLE`指向兼容Chrome Headless Shell；否则Remotion下载专用浏览器。此工作机的官方Chrome 157下载至本机工具目录，渲染使用独立临时浏览器，不接入个人浏览会话。需要当前工作机重新截图时可运行`node promo/capture/capture.cjs`；发布快照只保留剪辑所需截图，不包含本机捕获脚本或测试日志。
 
 成片验证与镜头开发自审见`deliverables/verification.json`及`deliverables/scene-review.md`。这些只验证素材/渲染，不是软件效果或临床证明。
+
+## 0.8.0社区分享旁白版
+另有约95秒的社区分享片：deliverables/日有回声-社区分享-旁白版.mp4、日有回声-分享旁白.wav/txt、日有回声-社区分享.srt。10镜介绍0.8.0功能、52张资料、备份恢复、非商业授权，结尾邀请一起改进。原45秒无旁白版本保留。
+旁白为本机Windows SAPI的Microsoft Huihui中文合成语音；没有克隆个人声音。每句分别合成、按实际PCM时长生成20条字幕，音轨与字幕采用同一帧时间表。make-narration.ps1/assemble-narration.mjs可在具备该语音的Windows重做；字幕和音频不读取日记。
+在studio运行npm run render:share重渲染；timeline与分句音频已包含在源码。新版截图取自0.8.0独立合成数据；旧45秒成片及其旧核验仍为历史。Remotion/Windows组件沿用各自条款，不能把本项目非商业许可视为第三方商业授权。

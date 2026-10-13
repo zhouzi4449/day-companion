@@ -1,0 +1,19 @@
+name: 商业授权咨询
+description: 商业用途须先联系维护者确认书面授权范围。
+body:
+  - type: markdown
+    attributes:
+      value: "作者：zhouzi4449。本表公开可见，请勿填写电话、私密合同、身份证、令牌或用户数据。提交申请不等于获得授权。请先读COMMERCIAL.md。"
+  - type: input
+    id: project
+    attributes:
+      label: 项目或组织的公开名称
+    validations:
+      required: true
+  - type: textarea
+    id: usage
+    attributes:
+      label: 拟议用途与授权范围
+      description: 说明部署、分发、收费或改造方式；后续再协商私密信息与正式协议。
+    validations:
+      required: true

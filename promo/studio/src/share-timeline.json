@@ -1,0 +1,219 @@
+[
+  {
+    "id": "Opening",
+    "title": "把今天，\n说给自己听",
+    "text": "忙了一天，你有没有想找一个地方，把今天的努力和心情说清楚？",
+    "audio": "narration/Opening.wav",
+    "startFrame": 0,
+    "frames": 57,
+    "audioSeconds": 1.9,
+    "cues": [
+      {
+        "text": "忙了一天，你有没有想找一个地方，把今天的努力和心情说清楚？",
+        "from": 0,
+        "to": 36
+      }
+    ]
+  },
+  {
+    "id": "Daily",
+    "title": "从今天小事，\n开始聊",
+    "screen": "writing",
+    "text": "日有回声是一款桌面成长陪伴应用。打开后，从今天发生的一件小事开始聊。",
+    "audio": "narration/Daily.wav",
+    "startFrame": 57,
+    "frames": 303,
+    "audioSeconds": 10.1,
+    "cues": [
+      {
+        "text": "日有回声是一款桌面成长陪伴应用。",
+        "from": 0,
+        "to": 129
+      },
+      {
+        "text": "打开后，从今天发生的一件小事开始聊。",
+        "from": 135,
+        "to": 282
+      }
+    ]
+  },
+  {
+    "id": "Talk",
+    "title": "接着你的话，\n一起找下一步",
+    "screen": "reply",
+    "text": "AI会接着你的话交流，根据你的说明调整回应。困境明确时，陪你尝试合适的一小步，也尊重只想被听见的时刻。",
+    "audio": "narration/Talk.wav",
+    "startFrame": 360,
+    "frames": 419,
+    "audioSeconds": 13.966666666666667,
+    "cues": [
+      {
+        "text": "AI会接着你的话交流，根据你的说明调整回应。",
+        "from": 0,
+        "to": 169
+      },
+      {
+        "text": "困境明确时，陪你尝试合适的一小步，也尊重只想被听见的时刻。",
+        "from": 175,
+        "to": 398
+      }
+    ]
+  },
+  {
+    "id": "Goals",
+    "title": "自己的目标，\n自己的节奏",
+    "screen": "goals",
+    "text": "目标由你自己来定：为什么在意，下一步是什么，什么时候开始。建议先确认，再保存。",
+    "audio": "narration/Goals.wav",
+    "startFrame": 779,
+    "frames": 374,
+    "audioSeconds": 12.466666666666667,
+    "cues": [
+      {
+        "text": "目标由你自己来定：",
+        "from": 0,
+        "to": 78
+      },
+      {
+        "text": "为什么在意，下一步是什么，什么时候开始。",
+        "from": 84,
+        "to": 248
+      },
+      {
+        "text": "建议先确认，再保存。",
+        "from": 254,
+        "to": 353
+      }
+    ]
+  },
+  {
+    "id": "Roles",
+    "title": "选择舒服语气，\n也能纠正理解",
+    "screen": "personas",
+    "text": "你可以选择温柔长者、知心姐姐或成年妹妹，也能调整回复长度、坦诚程度和追问频率。",
+    "audio": "narration/Roles.wav",
+    "startFrame": 1153,
+    "frames": 57,
+    "audioSeconds": 1.9,
+    "cues": [
+      {
+        "text": "你可以选择温柔长者、知心姐姐或成年妹妹，也能调整回复长度、坦诚程度和追问频率。",
+        "from": 0,
+        "to": 36
+      }
+    ]
+  },
+  {
+    "id": "Knowledge",
+    "title": "52张资料，\n方法来源可查",
+    "screen": "growth-method",
+    "text": "五十二张原创知识卡，涵盖学习、拖延、沟通和休息。方法带有来源、步骤和适用边界。",
+    "audio": "narration/Knowledge.wav",
+    "startFrame": 1210,
+    "frames": 361,
+    "audioSeconds": 12.033333333333333,
+    "cues": [
+      {
+        "text": "五十二张原创知识卡，涵盖学习、拖延、沟通和休息。",
+        "from": 0,
+        "to": 205
+      },
+      {
+        "text": "方法带有来源、步骤和适用边界。",
+        "from": 211,
+        "to": 340
+      }
+    ]
+  },
+  {
+    "id": "Records",
+    "title": "走过的日子，\n按天收好",
+    "screen": "days-renamed",
+    "text": "记录按天收好，点开再回看。AI总结标题，你也能自己修改。",
+    "audio": "narration/Records.wav",
+    "startFrame": 1571,
+    "frames": 268,
+    "audioSeconds": 8.933333333333334,
+    "cues": [
+      {
+        "text": "记录按天收好，点开再回看。",
+        "from": 0,
+        "to": 118
+      },
+      {
+        "text": "AI总结标题，你也能自己修改。",
+        "from": 124,
+        "to": 247
+      }
+    ]
+  },
+  {
+    "id": "Backup",
+    "title": "导出备份，\n确认之后恢复",
+    "screen": "backup-preview",
+    "text": "导出的备份可以恢复。恢复前先看内容概览，软件保留一份导入前备份。",
+    "audio": "narration/Backup.wav",
+    "startFrame": 1839,
+    "frames": 288,
+    "audioSeconds": 9.6,
+    "cues": [
+      {
+        "text": "导出的备份可以恢复。",
+        "from": 0,
+        "to": 84
+      },
+      {
+        "text": "恢复前先看内容概览，软件保留一份导入前备份。",
+        "from": 90,
+        "to": 267
+      }
+    ]
+  },
+  {
+    "id": "License",
+    "title": "源码公开协作，\n商业使用需授权",
+    "text": "源码公开，欢迎非商业学习与协作。商业使用请先联系作者取得授权。",
+    "audio": "narration/License.wav",
+    "startFrame": 2127,
+    "frames": 292,
+    "audioSeconds": 9.733333333333333,
+    "cues": [
+      {
+        "text": "源码公开，欢迎非商业学习与协作。",
+        "from": 0,
+        "to": 138
+      },
+      {
+        "text": "商业使用请先联系作者取得授权。",
+        "from": 144,
+        "to": 271
+      }
+    ]
+  },
+  {
+    "id": "Community",
+    "title": "一起，把日有回声\n升级得更好",
+    "text": "这仍是一款需要一起完善的体验版。欢迎报告问题、补充资料、提交改进。让我们一起，把日有回声升级得更好。",
+    "audio": "narration/Community.wav",
+    "startFrame": 2419,
+    "frames": 438,
+    "audioSeconds": 14.6,
+    "cues": [
+      {
+        "text": "这仍是一款需要一起完善的体验版。",
+        "from": 0,
+        "to": 120
+      },
+      {
+        "text": "欢迎报告问题、补充资料、提交改进。",
+        "from": 126,
+        "to": 273
+      },
+      {
+        "text": "让我们一起，把日有回声升级得更好。",
+        "from": 279,
+        "to": 417
+      }
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "date": "2026-10-13",
+  "duration": 95.253,
+  "frames": 2857,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": "30/1",
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCues": 20,
+  "fullVideoAndVoiceDecode": "passed",
+  "voicePeak": 0.924407958984375,
+  "voiceRms": 0.05741730417546263,
+  "syntheticDataOnly": true,
+  "voiceProvider": "Windows SAPI, local synthesis",
+  "fileBytes": 9011910,
+  "sha256": "44000cd51bdc6b0b036b5ef8e0d52840a0898fb7f43fe6acc8b8658eb9da73e0",
+  "visualReview": "see share-scene-review.md"
+}

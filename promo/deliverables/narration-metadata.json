@@ -1,0 +1,10 @@
+{
+  "provider": "Windows SAPI, local synthesis",
+  "voice": "Microsoft Huihui Desktop - Chinese (Simplified)",
+  "fps": 30,
+  "frames": 2857,
+  "seconds": 95.23333333333333,
+  "parts": 10,
+  "subtitleCues": 20,
+  "timing": "Each sentence synthesized separately; cues follow measured PCM duration with short pauses"
+}

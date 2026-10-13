@@ -1,5 +1,6 @@
 import { STORE_KEY, initialState, readState, saveState, localDate, personas, moods, preferences, upsertGoal, toggleGoal, demoFeedback, aiContext, normalizeProfile, upsertMemory, openingPrompt, conversationMode, recordDays, setDayTitle, removeRecord } from './core.mjs';
 import { knowledge, sources } from './knowledge.mjs';
+import {BACKUP_LIMIT,BEFORE_IMPORT_KEY,parseBackup,saveImportedState} from './backup.mjs';
 
 let browserStore;
 try { browserStore = window.localStorage; }
@@ -37,7 +38,7 @@ function toast(message) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => el.classList.remove('visible'), 4500);
 }
-function commit(next) {
+function commit(next,{importing=false}={}) {
   if (storageBlocked) { toast('存储暂时不可用，请先导出或处理顶部提示。输入仍在页面中。'); return false; }
   try {
     const raw = browserStore.getItem(STORE_KEY);
@@ -47,7 +48,8 @@ function commit(next) {
       toast('本地内容发生变化，未覆盖；当前输入仍保留。');
       return false;
     }
-    saveState(browserStore, next); lastStoredRaw = JSON.stringify(next); state = next; return true;
+    if(importing)saveImportedState(browserStore,next,lastStoredRaw);else saveState(browserStore, next);
+    lastStoredRaw = JSON.stringify(next); state = next; return true;
   }
   catch { toast('没有保存成功，输入仍保留。请导出备份，并检查浏览器存储空间或设置。'); return false; }
 }
@@ -237,6 +239,35 @@ function libraryHtml(query = '', kind = 'all') {
 function download(content,name,type='application/json') {
   const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+function insertBackupTools(){
+  const tools=document.querySelector('#export-data').parentElement;
+  const button=document.createElement('button');button.className='secondary';button.id='import-data';button.textContent='从备份恢复';tools.append(button);
+  const section=document.createElement('div');section.id='import-panel';section.hidden=true;tools.after(section);
+  const showCandidate=(candidate,label)=>{
+    const before=lastStoredRaw;const s=candidate.summary;
+    section.innerHTML=`<div class="confirm-inline"><h3>${escape(label)}</h3><p>${s.days}天 · ${s.entries}段记录 · ${s.goals}个目标 · ${s.memories}条确认事实</p><p class="privacy-note">恢复会替换当前记录和偏好。导入前内容会留在本机供恢复；AI连接不改动，历史授权重新关闭。文件不会发送给AI。</p><div class="form-actions"><button class="primary" id="confirm-import">确认恢复这些记录</button><button class="secondary" id="cancel-import">取消</button></div><p id="import-error" class="error-inline" role="alert"></p></div>`;
+    section.querySelector('#cancel-import').onclick=()=>{section.hidden=true;button.focus();};
+    section.querySelector('#confirm-import').onclick=()=>{
+      if(aiPending){section.querySelector('#import-error').textContent='回复正在生成，请等完成后再恢复。';return;}
+      if(lastStoredRaw!==before){section.querySelector('#import-error').textContent='当前记录已经变化，请重新选择备份。';return;}
+      clearTimeout(draftTimer);
+      if(commit(candidate.state,{importing:true})){titleAttempted.clear();titleNotices.clear();historyDay='';editingGoal='';proposedGoal=null;render();toast('记录已恢复；可以在陪伴页导出导入前的备份。');}
+    };
+    section.querySelector('#cancel-import').focus();
+  };
+  button.onclick=()=>{
+    if(aiPending){toast('回复正在生成，请等完成后再恢复。');return;}
+    section.hidden=false;section.innerHTML='<div class="field"><label for="backup-file">选择日有回声JSON备份（最多8MB）</label><input id="backup-file" type="file" accept=".json,application/json"><p id="import-error" class="error-inline" role="alert"></p><button class="text-button" id="close-import">取消</button></div>';
+    section.querySelector('#close-import').onclick=()=>{section.hidden=true;button.focus();};
+    section.querySelector('#backup-file').onchange=async event=>{const file=event.target.files[0];if(!file)return;const readFrom=lastStoredRaw;try{if(file.size>BACKUP_LIMIT)throw new Error('请选择8MB以内的JSON备份。');const candidate=parseBackup(await file.text());if(lastStoredRaw!==readFrom)throw new Error('当前记录已经变化，请重新选择备份。');if(!section.isConnected)return;showCandidate(candidate,file.name);}catch(error){section.querySelector('#import-error').textContent=error.message;}};
+    section.querySelector('#backup-file').focus();
+  };
+  let previousRaw=null;try{previousRaw=browserStore.getItem(BEFORE_IMPORT_KEY);}catch{/* Unavailable storage is already reported by the existing storage panel. */}
+  if(previousRaw!==null){
+    const previous=document.createElement('button');previous.id='export-before-import';previous.className='text-button';previous.textContent='导出导入前的备份';previous.onclick=()=>download(browserStore.getItem(BEFORE_IMPORT_KEY),`日有回声-导入前-${localDate()}.json`);tools.append(previous);
+    const note=document.createElement('p');note.className='small muted';note.textContent='每次恢复保留一份导入前备份；新的恢复会替换它。需要回退时，先导出这份备份，再选择它恢复。';tools.after(note);
+  }
+}
 function insertAiSettings(){
   const section=document.createElement('details');section.className='ai-settings';section.open=!!aiSettings.error||(!aiSettings.chatgpt&&aiSettings.provider==='chatgpt');
   section.innerHTML=`<h2>AI连接</h2><p class="small muted">默认使用ChatGPT订阅所含的Codex能力。它使用Codex额度，和网页ChatGPT的对话及API余额分开。</p><form id="ai-settings-form"><div class="field"><label for="ai-provider">对话通道</label><select id="ai-provider"><option value="chatgpt" ${aiSettings.provider==='chatgpt'?'selected':''}>ChatGPT订阅（Codex通道）</option><option value="api" ${aiSettings.provider==='api'?'selected':''}>自选兼容OpenAI格式的API</option><option value="demo" ${aiSettings.provider==='demo'?'selected':''}>本地规则演示</option></select></div><div id="api-fields" ${aiSettings.provider==='api'?'':'hidden'}><div class="field"><label for="api-base">API基础地址</label><input id="api-base" value="${escape(aiSettings.baseUrl)}" maxlength="500" placeholder="https://api.openai.com/v1"></div><div class="field"><label for="api-model">模型名称</label><input id="api-model" value="${escape(aiSettings.model)}" maxlength="120"></div><div class="field"><label for="api-key">你的API密钥</label><input id="api-key" type="password" autocomplete="off" maxlength="2000" placeholder="${aiSettings.hasKey?'已安全保存，留空保持':'仅保存在Windows安全存储，不回显'}"></div><p class="small muted">API按服务商规则另行计费，Plus订阅不会转换成API余额。更换API地址后需要重新填写密钥。</p></div><p id="ai-settings-error" class="error-inline" role="alert">${escape(aiSettings.error??'')}</p><button class="primary" type="submit" ${window.dayAi?'':'disabled'}>保存AI设置</button></form><div class="data-tools"><button class="secondary" id="chatgpt-login" ${window.dayAi?'':'disabled'}>用ChatGPT账号登录</button><button class="text-button" id="check-login" ${window.dayAi?'':'disabled'}>检查登录状态</button></div><p id="login-status" class="small muted">${aiSettings.chatgpt?'已检测到ChatGPT登录。能否使用以账户的Codex额度为准。':'尚未检测到ChatGPT登录。需要你在官方浏览器页面完成登录。'}</p><div id="login-instructions" hidden></div><p class="privacy-note">仅提交你写下的内容、选定目标与必要的当日对话。较早记录需开启下方历史授权。Codex采用临时会话，不把本次对话写入它的本地会话文件。API密钥不进入网页或日记导出。</p><hr>`;
@@ -272,7 +303,9 @@ function companionPage() {
   bindCommon();
   insertAiSettings();
   insertCompanionPreferences();
-  const libraryFilters=document.createElement('div');libraryFilters.className='field';libraryFilters.innerHTML='<label for="knowledge-kind">资料类型</label><select id="knowledge-kind"><option value="all">全部资料</option><option value="method">可试的方法（8）</option><option value="concept">理解与支持（24）</option></select>';document.querySelector('#knowledge-search').closest('.field').before(libraryFilters);
+  insertBackupTools();
+  const licenseInfo=document.createElement('details');licenseInfo.className='privacy-note';licenseInfo.innerHTML='<summary>项目与许可</summary><p>日有回声0.8.0 · 源码公开协作，采用PolyForm Noncommercial 1.0.0。非商业使用、修改和分发遵循许可；商业使用需联系作者zhouzi4449另行授权。</p><p><a href="https://github.com/zhouzi4449/day-companion" target="_blank" rel="noopener noreferrer">查看项目与参与改进 ↗</a> · <a href="https://github.com/zhouzi4449/day-companion/blob/main/COMMERCIAL.md" target="_blank" rel="noopener noreferrer">商业授权说明 ↗</a></p>';document.querySelector('#export-data').closest('section').append(licenseInfo);
+  const libraryFilters=document.createElement('div');libraryFilters.className='field';libraryFilters.innerHTML=`<label for="knowledge-kind">资料类型</label><select id="knowledge-kind"><option value="all">全部资料</option><option value="method">可试的方法（${knowledge.filter(k=>k.kind==='method').length}）</option><option value="concept">理解与支持（${knowledge.filter(k=>k.kind!=='method').length}）</option></select>`;document.querySelector('#knowledge-search').closest('.field').before(libraryFilters);
   const filterLibrary=()=>{document.querySelector('#library-list').innerHTML=libraryHtml(document.querySelector('#knowledge-search').value.trim(),document.querySelector('#knowledge-kind').value);};
   document.querySelector('#knowledge-kind').addEventListener('change',filterLibrary);
   document.querySelectorAll('[data-persona]').forEach(b=>b.addEventListener('click',()=>{if(commit({...state,persona:b.dataset.persona})){companionPage();toast('陪伴角色已切换，已有记录保留原来的语气');}}));
@@ -280,7 +313,7 @@ function companionPage() {
   document.querySelector('#knowledge-search').addEventListener('input',filterLibrary);
   document.querySelector('#export-data').addEventListener('click',()=>download(JSON.stringify(state,null,2),`日有回声-${localDate()}.json`));
   document.querySelector('#clear-data').addEventListener('click',()=>{
-    const box=document.querySelector('#clear-confirm');box.hidden=false;box.innerHTML='<div class="confirm-inline"><p>所有目标、记录、记忆、草稿和聊天偏好都会删除，不能撤销。AI连接设置保留。可以先导出。</p><div class="form-actions"><button class="danger" id="confirm-clear">删除全部本地内容</button><button class="secondary" id="cancel-clear">保留内容</button></div></div>';
+    const box=document.querySelector('#clear-confirm');box.hidden=false;box.innerHTML='<div class="confirm-inline"><p>所有目标、记录、记忆、草稿、聊天偏好及导入前备份都会删除，不能撤销。AI连接设置保留。可以先导出。</p><div class="form-actions"><button class="danger" id="confirm-clear">删除全部本地内容</button><button class="secondary" id="cancel-clear">保留内容</button></div></div>';
     document.querySelector('#cancel-clear').addEventListener('click',()=>{box.hidden=true;document.querySelector('#clear-data').focus();});
     document.querySelector('#confirm-clear').addEventListener('click',resetStorage);document.querySelector('#cancel-clear').focus();
   });
@@ -288,7 +321,7 @@ function companionPage() {
 function resetStorage() {
   if(aiPending){toast('回复正在生成，请等完成后再清空，避免新回复重新写入记录。');return;}
   clearTimeout(draftTimer);
-  try {browserStore.removeItem(STORE_KEY);lastStoredRaw=null;state=initialState();storageBlocked=false;editingGoal='';document.querySelector('#storage-error').hidden=true;render();toast('本地内容已清空');}
+  try {browserStore.removeItem(BEFORE_IMPORT_KEY);browserStore.removeItem(STORE_KEY);lastStoredRaw=null;state=initialState();storageBlocked=false;editingGoal='';document.querySelector('#storage-error').hidden=true;render();toast('本地内容及导入前备份已清空');}
   catch{toast('浏览器拒绝清空，请检查存储设置。');}
 }
 function bindCommon() {

@@ -1,0 +1,14 @@
+name: 资料与体验改进
+description: 分享可靠来源、知识卡修正或交互建议。
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 用户场景、建议和来源链接
+      description: 标明原研究、官方教育或个人经验，不复制文章全文。
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: 不适用情境或可能的问题

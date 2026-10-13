@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "render:share": "node render-share.mjs",
     "studio": "remotion studio src/index.jsx --port 3333",
     "render": "node render.mjs",
     "stills": "node render.mjs --stills"

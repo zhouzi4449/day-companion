@@ -1,0 +1,66 @@
+const { createRequire } = require('node:module');
+const path = require('node:path');
+const fs = require('node:fs');
+const os = require('node:os');
+const assert = require('node:assert/strict');
+const { spawnSync } = require('node:child_process');
+const { _electron } = require(process.env.PLAYWRIGHT_MODULE_PATH || 'playwright');
+const root = path.resolve(__dirname, '..');
+const electronPath = process.argv[2] ? path.resolve(process.argv[2]) : createRequire(path.join(root, 'package.json'))('electron');
+const dataPath = fs.mkdtempSync(path.join(os.tmpdir(), 'day-companion-test-'));
+const env = { ...process.env, DAY_COMPANION_TEST_DATA: dataPath };
+delete env.ELECTRON_RUN_AS_NODE;
+const checks = [];
+let app;
+async function launch() {
+  app = await _electron.launch({ executablePath: electronPath, args: process.argv[2] ? [] : [root], env, timeout: 60000 });
+  const page = await app.firstWindow();
+  await page.getByRole('heading', { name:/^(今天，过得怎么样？|继续聊一会儿)$/ }).waitFor();
+  return page;
+}
+(async () => {
+  let page = await launch();
+  const errors=[];page.on('pageerror',error=>errors.push(error.message));
+  const settings = await app.evaluate(({ BrowserWindow }) => BrowserWindow.getAllWindows()[0].webContents.getLastWebPreferences());
+  assert.equal(settings.nodeIntegration,false);assert.equal(settings.contextIsolation,true);assert.equal(settings.sandbox,true);
+  assert.equal(await page.evaluate(()=>typeof require),'undefined');checks.push('独立桌面窗口，renderer 无 Node 权限，隔离和沙箱开启');
+  assert.ok(page.url().startsWith('companion://app/'));assert.ok(await page.locator('body').evaluate(el=>el.classList.contains('desktop-app')));checks.push('打包文件直接加载，无本地 HTTP 服务依赖');
+  assert.equal((await page.evaluate(()=>window.dayAi.settings())).provider,'chatgpt');checks.push('首次默认为ChatGPT订阅通道');
+  await page.evaluate(async()=>{const s=await window.dayAi.settings();await window.dayAi.save({provider:'demo',baseUrl:s.baseUrl,model:s.model,apiKey:''});});
+  await page.reload();await page.getByRole('heading',{name:/^(今天，过得怎么样？|继续聊一会儿)$/}).waitFor();
+  await page.getByRole('navigation',{name:'主导航'}).getByRole('link',{name:'目标',exact:true}).click();
+  await page.getByRole('textbox',{name:'想做的事'}).fill('桌面验证：读一点书');
+  await page.getByRole('textbox',{name:'最小的一步（可选）'}).fill('读两页');
+  await page.getByRole('button',{name:'保存目标',exact:true}).click();
+  await page.getByRole('navigation',{name:'主导航'}).getByRole('link',{name:'今天',exact:true}).click();
+  await page.locator('#daily-text').fill('桌面验证记录：今天读了两页。');
+  await page.getByRole('button',{name:'疲惫',exact:true}).click();
+  await page.getByRole('button',{name:'听听反馈',exact:true}).click();
+  await page.getByText('减负 / 本地规则演示', {exact:true}).waitFor();checks.push('桌面目标、日记和反馈演示可操作');
+  await page.getByRole('navigation',{name:'主导航'}).getByRole('link',{name:'陪伴',exact:true}).click();
+  await page.getByRole('button',{name:/温柔长者/}).click();
+  await app.close();
+  page = await launch();
+  assert.ok(await page.getByRole('heading',{name:'温柔长者',exact:true}).count());
+  assert.ok(await page.evaluate(()=>JSON.parse(localStorage.getItem('day-companion.v1')).goals.some(g=>g.title==='桌面验证：读一点书')));
+  assert.ok(await page.getByText('桌面验证记录：今天读了两页。',{exact:true}).count());checks.push('退出并重开，目标、日记、角色恢复');
+  await page.getByRole('navigation',{name:'主导航'}).getByRole('link',{name:'回望',exact:true}).click();
+  const second = spawnSync(electronPath, process.argv[2] ? [] : [root], {env,timeout:15000,windowsHide:true});
+  assert.equal(second.status,0);
+  await page.getByRole('heading',{name:/^(今天，过得怎么样？|继续聊一会儿)$/}).waitFor();
+  assert.equal((await app.windows()).length,1);checks.push('重复打开只保留一个窗口，并回到今天');
+  for(const [width,height] of [[1280,900],[1000,720],[900,640]]) {
+    await app.evaluate(({ BrowserWindow },size)=>BrowserWindow.getAllWindows()[0].setSize(...size),[width,height]);
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);checks.push(`窗口 ${width}x${height} 无横向溢出`);
+  }
+  await app.evaluate(({ BrowserWindow })=>BrowserWindow.getAllWindows()[0].setSize(1280,900));
+  await app.evaluate(({ BrowserWindow })=>BrowserWindow.getAllWindows()[0].webContents.setZoomFactor(2));
+  assert.equal(await page.getByRole('navigation',{name:'主导航'}).isVisible(),true);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+  checks.push('200% 缩放后导航仍可见且无横向溢出');
+  await app.evaluate(({ BrowserWindow })=>BrowserWindow.getAllWindows()[0].webContents.setZoomFactor(1));
+  await page.screenshot({path:path.join(root,'output/playwright/desktop-app.png')});
+  assert.equal(errors.length,0);checks.push('渲染脚本无错误');
+  await app.close();app=null;
+  console.log(JSON.stringify({status:'passed',date:'2026-10-12',executable:electronPath,testData:dataPath,checks},null,2));
+})().catch(async error=>{console.error(error);if(app)await app.close().catch(()=>{});process.exitCode=1;});

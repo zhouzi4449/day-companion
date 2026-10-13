@@ -1,0 +1,16 @@
+name: 使用问题
+description: 描述可以重现的问题，避开私人内容。
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 软件版本与Windows版本
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 怎样出现问题、希望怎样、实际怎样
+      description: 用合成例子，不上传真实日记或密钥。
+    validations:
+      required: true

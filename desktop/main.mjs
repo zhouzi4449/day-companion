@@ -6,7 +6,7 @@ import { createAiService } from './ai.mjs';
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../app');
 const origin = 'companion://app';
-const allowedLinks = new Set([...Object.values(sources).map(s => s.url), 'https://www.nhc.gov.cn/xcs/c100122/202507/4819417642d4432fb9f227e1e10ca616.shtml']);
+const allowedLinks = new Set([...Object.values(sources).map(s => s.url), 'https://www.nhc.gov.cn/xcs/c100122/202507/4819417642d4432fb9f227e1e10ca616.shtml', 'https://github.com/zhouzi4449/day-companion', 'https://github.com/zhouzi4449/day-companion/blob/main/COMMERCIAL.md']);
 protocol.registerSchemesAsPrivileged([{ scheme: 'companion', privileges: { standard: true, secure: true, supportFetchAPI: true } }]);
 app.setName('DayCompanion');
 if (process.env.DAY_COMPANION_TEST_DATA) app.setPath('userData', path.resolve(process.env.DAY_COMPANION_TEST_DATA));
