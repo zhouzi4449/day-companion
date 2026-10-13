@@ -1,0 +1,21 @@
+import fs from 'node:fs';import path from 'node:path';import {spawnSync} from 'node:child_process';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';
+const root=path.resolve('promo'),bin=path.join(root,'studio/node_modules/@remotion/compositor-win32-x64-msvc');
+const video=path.join(root,'deliverables/日有回声-新版项目分享.mp4'),audio=path.join(root,'deliverables/日有回声-新版旁白.wav');
+const run=(program,args)=>{const r=spawnSync(path.join(bin,program+'.exe'),args,{encoding:'utf8',windowsHide:true});if(r.status!==0)throw Error(r.stderr);return r.stdout;};
+const meta=JSON.parse(fs.readFileSync(path.join(root,'deliverables/voice-v2-metadata.json'),'utf8'));
+const source=JSON.parse(fs.readFileSync(path.join(root,'narration-v2.json'),'utf8')),timeline=JSON.parse(fs.readFileSync(path.join(root,'studio/src/launch-timeline.json'),'utf8'));
+assert.equal(source.map(p=>p.text).join(''),timeline.map(p=>p.text).join(''));
+assert(timeline.every(p=>p.audio&&fs.existsSync(path.join(root,'studio/public',p.audio))),'Missing narration');
+assert.equal(timeline.reduce((n,p)=>n+p.frames,0),meta.frames);
+const srt=fs.readFileSync(path.join(root,'deliverables/日有回声-新版分享.srt'),'utf8');
+assert.equal((srt.match(/-->/g)||[]).length,meta.subtitleCues);assert(srt.includes('把这个项目做得更好'));assert(srt.includes('商业化请先联系我授权'));
+const info=JSON.parse(run('ffprobe',['-v','error','-show_streams','-show_format','-of','json',video])),v=info.streams.find(s=>s.codec_type==='video'),a=info.streams.find(s=>s.codec_type==='audio');
+assert.equal(v.width,1920);assert.equal(v.height,1080);assert.equal(v.avg_frame_rate,'30/1');assert.equal(v.codec_name,'h264');assert.equal(a?.codec_name,'aac');assert.equal(Number(v.nb_frames),meta.frames);assert(Math.abs(Number(info.format.duration)-meta.seconds)<.1);
+run('ffmpeg',['-v','error','-i',video,'-c:v','rawvideo','-c:a','pcm_s16le','-f','null','NUL']);run('ffmpeg',['-v','error','-i',audio,'-c:a','pcm_s16le','-f','null','NUL']);
+const pcm=fs.readFileSync(audio);let peak=0,sum=0;for(let i=44;i+1<pcm.length;i+=2){const x=pcm.readInt16LE(i)/32768;peak=Math.max(peak,Math.abs(x));sum+=x*x;}
+assert(peak>.01&&peak<.999,'Silent or clipped voice');
+fs.mkdirSync(path.join(root,'deliverables/v2-frames'),{recursive:true});
+for(const p of timeline)run('ffmpeg',['-y','-v','error','-ss',String((p.startFrame+p.frames*.6)/30),'-i',video,'-frames:v','1',path.join(root,'deliverables/v2-frames',p.id+'.png')]);
+const captures=JSON.parse(fs.readFileSync(path.join(root,'studio/src/capture-v2.json'),'utf8'));
+const result={status:'passed',date:'2026-10-13',duration:Number(info.format.duration),frames:meta.frames,resolution:[1920,1080],fps:'30/1',videoCodec:'h264',audioCodec:'aac',subtitleCues:meta.subtitleCues,fullVideoAndVoiceDecode:'passed',voicePeak:peak,voiceRms:Math.sqrt(sum/((pcm.length-44)/2)),syntheticVoice:true,speaker:meta.speaker,voiceCloning:false,syntheticDataOnly:true,actualOperationScreenshots:Object.values(captures.steps).reduce((n,p)=>n+p.length,0),fileBytes:fs.statSync(video).size,sha256:createHash('sha256').update(fs.readFileSync(video)).digest('hex'),visualReview:'v2-scene-review.md',voiceNaturalness:'Subjective; automatic format/volume checks do not establish human recording or naturalness'};
+fs.writeFileSync(path.join(root,'deliverables/v2-verification.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));

@@ -9,6 +9,7 @@ promo/deliverables/*.mp4
 promo/deliverables/*.wav
 promo/capture/raw/
 promo/studio/build/
+promo/studio/build-v2/
 *.keystore
 *.jks
 *.p12

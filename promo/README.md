@@ -33,3 +33,30 @@ Studio默认本机3333端口。可用`REMOTION_BROWSER_EXECUTABLE`指向兼容Ch
 另有约95秒的社区分享片：deliverables/日有回声-社区分享-旁白版.mp4、日有回声-分享旁白.wav/txt、日有回声-社区分享.srt。10镜介绍0.8.0功能、52张资料、备份恢复、非商业授权，结尾邀请一起改进。原45秒无旁白版本保留。
 旁白为本机Windows SAPI的Microsoft Huihui中文合成语音；没有克隆个人声音。每句分别合成、按实际PCM时长生成20条字幕，音轨与字幕采用同一帧时间表。make-narration.ps1/assemble-narration.mjs可在具备该语音的Windows重做；字幕和音频不读取日记。
 在studio运行npm run render:share重渲染；timeline与分句音频已包含在源码。新版截图取自0.8.0独立合成数据；旧45秒成片及其旧核验仍为历史。Remotion/Windows组件沿用各自条款，不能把本项目非商业许可视为第三方商业授权。
+
+## 新版项目分享（v2）
+
+`deliverables/日有回声-新版项目分享.mp4`、`日有回声-新版旁白.wav/txt`、`日有回声-新版分享.srt`。这一版63.233秒、16句字幕，重做口语化讲解与剪辑，使用用户试听后选择的官方Qwen3-TTS Serena预设女声；仍为合成旁白，不是真人录音。没有克隆博主声音。完整参数见 `deliverables/voice-v2-metadata.json`，来源比较和参考视频见 [references-v2.md](references-v2.md)。
+
+剪辑包括0.8.0独立示例数据的28张实际操作截图、局部缩放、操作前后切换、资料卡与逐句字幕；它是截图剪辑，不是连续录屏。参考视频仅在本机用于分析，没有进入本片或公开源码。旧片保留。
+
+工程已经包含新旁白，重新剪辑无需安装语音模型：
+
+```powershell
+cd promo/studio
+node render-v2.mjs --stills
+node render-v2.mjs
+```
+
+如需重新生成旁白，用单独的Python 3.12虚拟环境安装 `promo/requirements-voice.txt`。本次GPU环境先从PyTorch官方cu128索引安装torch/torchaudio 2.8.0，再安装qwen-tts 0.1.1；不要覆盖应用或系统Python依赖。将Qwen官方模型固定到metadata记录的revision，下载至工作目录之外，通过文件SHA256核对；模型权重不随源码或桌面程序分发。只有合成新音频才需要模型与相应显存。
+
+```powershell
+python promo/synthesize-qwen.py --model <本机模型目录> --samples
+python promo/synthesize-qwen.py --model <本机模型目录> --speaker Serena
+node promo/assemble-v2.mjs
+node promo/verify-v2.mjs
+```
+
+音色更换时同时设置 `NARRATION_SPEAKER`，使metadata与实际音色一致；重新配音前把旧的 `promo/capture/raw/qwen-clauses` 改名保留，因为脚本会保留已有分句。24kHz单声道PCM16按句实测时长编排，没有通过加速/变调把系统语音伪装成真人。ASR反向转写仅辅助检查漏读与重复，不能证明真人感；实际核验见 `deliverables/v2-verification.json` 和 `v2-scene-review.md`。
+
+本机ASR核对用 `openai-whisper==20250625` 的多语言base模型，独立工具环境安装后运行 `python promo/transcribe-v2.py`；没有调用收费转写API。原始转写保留同音字识别错误，字幕使用原稿与实测音频时间表，不直接拿ASR结果发布。

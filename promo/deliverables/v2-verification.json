@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "date": "2026-10-13",
+  "duration": 63.253,
+  "frames": 1897,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": "30/1",
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "subtitleCues": 16,
+  "fullVideoAndVoiceDecode": "passed",
+  "voicePeak": 0.917022705078125,
+  "voiceRms": 0.08577814813694208,
+  "syntheticVoice": true,
+  "speaker": "Serena",
+  "voiceCloning": false,
+  "syntheticDataOnly": true,
+  "actualOperationScreenshots": 28,
+  "fileBytes": 14888178,
+  "sha256": "7ada4f5c433aae6712cc058e436b774a4d15a2e9fd9decaec89e78b734785641",
+  "visualReview": "v2-scene-review.md",
+  "voiceNaturalness": "Subjective; automatic format/volume checks do not establish human recording or naturalness"
+}

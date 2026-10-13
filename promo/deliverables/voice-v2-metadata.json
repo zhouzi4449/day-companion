@@ -1,0 +1,17 @@
+{
+  "provider": "Qwen3-TTS local CUDA synthesis",
+  "model": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
+  "revision": "0c0e3051f131929182e2c023b9537f8b1c68adfe",
+  "speaker": "Serena",
+  "license": "Apache-2.0",
+  "synthetic": true,
+  "voiceCloning": false,
+  "referenceAudioUsed": false,
+  "sampleRate": 24000,
+  "fps": 30,
+  "frames": 1897,
+  "seconds": 63.233333333333334,
+  "parts": 11,
+  "subtitleCues": 16,
+  "timing": "Measured per-sentence PCM duration, silence edges trimmed; no pitch/speed change; subtitles and edits use the same 30fps timeline"
+}

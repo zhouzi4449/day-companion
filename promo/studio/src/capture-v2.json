@@ -1,0 +1,173 @@
+{
+  "syntheticData": true,
+  "actualDesktop": "0.8.0",
+  "recordedAiSource": "live-history-title-output.json: first actual model response",
+  "newAiCalls": 0,
+  "elapsed": 14.828,
+  "events": [
+    {
+      "id": "Daily",
+      "from": 0.776,
+      "to": 3.261
+    },
+    {
+      "id": "Talk",
+      "from": 3.721,
+      "to": 5.718
+    },
+    {
+      "id": "Step",
+      "from": 5.718,
+      "to": 7.163
+    },
+    {
+      "id": "Goals",
+      "from": 7.399,
+      "to": 11.808
+    },
+    {
+      "id": "Roles",
+      "from": 11.835,
+      "to": 13.013
+    },
+    {
+      "id": "Knowledge",
+      "from": 13.013,
+      "to": 13.92
+    },
+    {
+      "id": "Records",
+      "from": 13.936,
+      "to": 14.828
+    }
+  ],
+  "steps": {
+    "Daily": [
+      {
+        "file": "steps/Daily-0.png",
+        "at": 0.972
+      },
+      {
+        "file": "steps/Daily-1.png",
+        "at": 1.476
+      },
+      {
+        "file": "steps/Daily-2.png",
+        "at": 2.035
+      },
+      {
+        "file": "steps/Daily-3.png",
+        "at": 2.388
+      },
+      {
+        "file": "steps/Daily-4.png",
+        "at": 2.848
+      },
+      {
+        "file": "steps/Daily-5.png",
+        "at": 3.261
+      }
+    ],
+    "Talk": [
+      {
+        "file": "steps/Talk-0.png",
+        "at": 3.838
+      },
+      {
+        "file": "steps/Talk-1.png",
+        "at": 4.232
+      },
+      {
+        "file": "steps/Talk-2.png",
+        "at": 4.808
+      },
+      {
+        "file": "steps/Talk-3.png",
+        "at": 5.268
+      },
+      {
+        "file": "steps/Talk-4.png",
+        "at": 5.718
+      }
+    ],
+    "Step": [
+      {
+        "file": "steps/Step-0.png",
+        "at": 5.818
+      },
+      {
+        "file": "steps/Step-1.png",
+        "at": 7.163
+      }
+    ],
+    "Goals": [
+      {
+        "file": "steps/Goals-0.png",
+        "at": 7.504
+      },
+      {
+        "file": "steps/Goals-1.png",
+        "at": 11.808
+      }
+    ],
+    "Roles": [
+      {
+        "file": "steps/Roles-0.png",
+        "at": 12.171
+      },
+      {
+        "file": "steps/Roles-1.png",
+        "at": 12.297
+      },
+      {
+        "file": "steps/Roles-2.png",
+        "at": 12.453
+      },
+      {
+        "file": "steps/Roles-3.png",
+        "at": 12.597
+      },
+      {
+        "file": "steps/Roles-4.png",
+        "at": 13.013
+      }
+    ],
+    "Knowledge": [
+      {
+        "file": "steps/Knowledge-0.png",
+        "at": 13.133
+      },
+      {
+        "file": "steps/Knowledge-1.png",
+        "at": 13.413
+      },
+      {
+        "file": "steps/Knowledge-2.png",
+        "at": 13.52
+      },
+      {
+        "file": "steps/Knowledge-3.png",
+        "at": 13.92
+      }
+    ],
+    "Records": [
+      {
+        "file": "steps/Records-0.png",
+        "at": 14.109
+      },
+      {
+        "file": "steps/Records-1.png",
+        "at": 14.226
+      },
+      {
+        "file": "steps/Records-2.png",
+        "at": 14.392
+      },
+      {
+        "file": "steps/Records-3.png",
+        "at": 14.828
+      }
+    ]
+  },
+  "privateUserDataRead": false
+}

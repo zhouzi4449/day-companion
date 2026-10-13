@@ -51,16 +51,16 @@ npm run package:win
 
 ## 分享视频与旁白
 
-约95秒1080p社区分享片，中文合成旁白、20段同步字幕、原创轻音乐，结尾邀请大家一起报告问题、补资料、提交改进。文稿在 `promo/deliverables/日有回声-分享旁白.txt`，字幕在同目录 `日有回声-社区分享.srt`；成片在[Releases](https://github.com/zhouzi4449/day-companion/releases/tag/v0.8.0)。
+新版约63秒1080p项目分享片，使用Qwen3-TTS官方Serena预设女声、16段同步字幕、实际操作截图变化、局部聚焦与原创轻音乐，结尾邀请一起报告问题、补资料、提交改进。它是**合成配音**，不是真人录音，没有克隆博主声音。文稿在 `promo/deliverables/日有回声-新版旁白.txt`，字幕在同目录 `日有回声-新版分享.srt`；成片在[Releases](https://github.com/zhouzi4449/day-companion/releases/tag/v0.8.0)。[参考视频与声音来源](promo/references-v2.md)说明原站播放量、剪辑借鉴与模型许可。原45秒无旁白与95秒系统配音版本保留。
 
 ```powershell
 cd promo/studio
 npm ci
 npm run studio
-npm run render:share
+node render-v2.mjs
 ```
 
-工程包含旁白分句音频。Windows装有简体中文SAPI语音时，可在根目录运行 `powershell -File promo/make-narration.ps1` 重新配音。Remotion使用独立许可，详见[promo/README.md](promo/README.md)。
+工程包含旁白分句音频，重新剪辑无需下载语音模型；重新生成旁白才需要独立Python环境和官方模型，详见[promo/README.md](promo/README.md)。旧SAPI版本脚本仍保留。Remotion和语音模型使用各自许可，不能通过本项目的商业授权绕过第三方条件。
 
 ## 非商业许可
 
