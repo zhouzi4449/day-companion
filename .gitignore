@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.env
+.env.*
+!.env.example
+*.log
+promo/deliverables/*.mp4
+promo/studio/build/
+*.keystore
+*.jks
+*.p12
+ai-settings.json
+auth.json

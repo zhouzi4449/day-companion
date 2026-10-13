@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>日有回声 · 今天过得怎么样</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 20c5-14 16-15 24-13-1 10-7 19-19 18M8 25 23 12' fill='none' stroke='%2328594b' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">跳到内容</a>
+  <header class="topbar">
+    <a class="brand" href="#today" aria-label="日有回声，今天"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 20c5-14 16-15 24-13-1 10-7 19-19 18M8 25 23 12" /></svg><span>日有回声</span></a>
+    <nav id="desktop-nav" aria-label="主导航"></nav>
+    <button class="text-button help-open" type="button">需要支持</button>
+  </header>
+  <aside class="prototype-note" id="ai-connection-note">正在读取 AI 连接设置。记录保存在当前设备。</aside>
+  <div id="storage-error" role="alert" hidden></div>
+  <main id="main" tabindex="-1"></main>
+  <nav class="bottom-nav" id="mobile-nav" aria-label="移动导航"></nav>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <dialog id="support-dialog" aria-labelledby="support-title">
+    <div class="dialog-content">
+      <p class="muted">先照顾此刻的你</p>
+      <h2 id="support-title">你可以找现实中的支持</h2>
+      <p>如果你有立即伤害自己或他人的危险，请联系所在地急救，或到附近急诊。尽可能让一个可信任的人陪在身边。</p>
+      <p>中国大陆可拨打 <a href="tel:12356">12356 心理援助热线</a>。其他地区请使用当地心理支持和紧急服务。热线不替代急救，接听情况因地区而异。</p>
+      <p>也可以向可信任的人说：“我现在有点难，能不能陪我待一会儿？”</p>
+      <p class="small muted">这个原型不能判断你的安全状态、提供诊断或代替专业帮助。</p>
+      <a class="source-link" href="https://www.nhc.gov.cn/xcs/c100122/202507/4819417642d4432fb9f227e1e10ca616.shtml" target="_blank" rel="noopener noreferrer">查看热线官方来源 ↗</a>
+      <form method="dialog"><button class="primary" type="submit">返回</button></form>
+    </div>
+  </dialog>
+  <script type="module" src="/ui.mjs"></script>
+</body>
+</html>

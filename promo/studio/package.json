@@ -1,0 +1,19 @@
+{
+  "name": "day-companion-promo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.jsx --port 3333",
+    "render": "node render.mjs",
+    "stills": "node render.mjs --stills"
+  },
+  "dependencies": {
+    "remotion": "4.0.535",
+    "@remotion/cli": "4.0.535",
+    "@remotion/bundler": "4.0.535",
+    "@remotion/renderer": "4.0.535",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  }
+}

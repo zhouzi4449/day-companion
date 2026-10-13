@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "date": "2026-10-13",
+  "duration": 45.013,
+  "resolution": [
+    1920,
+    1080
+  ],
+  "fps": "30/1",
+  "videoCodec": "h264",
+  "audioCodec": "aac",
+  "audioSampleRate": "48000",
+  "frames": 1350,
+  "subtitleCues": 12,
+  "subtitleType": "burned-in + separate UTF-8 SRT",
+  "subtitleVisualReview": "Reviewed actual MP4 frames at 2,7,16,22,28,35,38,43 seconds; Chinese subtitles readable with no clipping",
+  "fullDecode": "passed",
+  "fileBytes": 11362254,
+  "sha256": "fbddf1600e532de94fcf4290b703c8936078f445cb69d8bbd7c8a514bdea0c2f",
+  "syntheticDataOnly": true
+}

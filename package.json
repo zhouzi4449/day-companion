@@ -1,0 +1,24 @@
+{
+  "name": "day-companion",
+  "productName": "日有回声",
+  "version": "0.7.0",
+  "private": true,
+  "type": "module",
+  "main": "desktop/main.mjs",
+  "scripts": {
+    "start": "electron .",
+    "preview": "node app/server.mjs",
+    "package:win": "node desktop/package.mjs",
+    "test": "node --test tests/core.test.mjs tests/ai.test.mjs"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "44.7.0"
+  },
+  "dependencies": {
+    "@openai/codex": "0.162.1"
+  }
+}
